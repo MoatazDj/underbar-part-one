@@ -8,7 +8,7 @@
   // iterator when the user does not pass one in, this will be handy.
   _.identity = function(val) {
     /* START SOLUTION */
-
+    return val
     /* END SOLUTION */
   };
 
@@ -27,7 +27,29 @@
   // return just the first element.
   _.first = function(array, n) {
     /* START SOLUTION */
-
+    var result = []
+    if (n === undefined) {
+      return array[0]
+    }
+    if (n > array.length) {
+      return array
+    }
+    if (array === []) {
+      return undefined
+    }
+    if (!Array.isArray(array)) {
+      if (n === undefined) {
+        return undefined 
+      }
+      else  {
+        return []
+      }
+    }
+      for (let index = 0; index < n; index++) {
+        result.push(array[index])
+        
+      }
+      return result
     /* END SOLUTION */
   };
 
@@ -35,7 +57,18 @@
   // last element.
   _.last = function(array, n) {
     /* START SOLUTION */
-
+    var result = []
+      if (n === undefined) {
+        return array[array.length-1] 
+      }
+      if (n > array.length) {
+        return array
+      }
+      for (let index = array.length-n; index < array.length; index++) {
+        result.push(array[index])
+        
+      }
+      return result
     /* END SOLUTION */
   };
 
@@ -47,35 +80,101 @@
   _.each = function(collection, iterator) {
     /* START SOLUTION */
 
+    if (Array.isArray(collection)) {
+      for (let index = 0; index < collection.length; index++) {
+        iterator(collection[index], index, collection)
+      }
+    }
+      else {
+        for(var key in collection){
+          iterator(collection[key],key, collection)
+        }
+      }
     /* END SOLUTION */
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
-  _.indexOf = function(array, target){
+  _.indexOf = function(array, target, start, isSorted){
     /* START SOLUTION */
+    if (start === undefined){
+      start = 0
+    }
 
+    for (var i = start; i < array.length; i++){
+      if ( array[i] === target ){
+        return i;
+      }
+    }
+    return -1;
     /* END SOLUTION */
   };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
     /* START SOLUTION */
-
+      var acc = []
+      if (!Array.isArray(collection)) {
+        acc = {}
+      _.each(collection, function(element, key, collection){
+        if (test(element)) {
+          acc[key] = element
+        }
+    })
+    }else
+        _.each(collection, function(element, i, collection){
+          if (test(element)) {
+            acc.push(element)
+          }
+      
+    })
+    return acc
     /* END SOLUTION */
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     /* START SOLUTION */
-
+    var acc = []
+      if (!Array.isArray(collection)) {
+        acc = {}
+      _.each(collection, function(element, key, collection){
+        if (!test(element)) {
+          acc[key] = element
+        }
+    })
+    }else
+        _.each(collection, function(element, i, collection){
+          if (!test(element)) {
+            acc.push(element)
+          }
+      
+    })
+    return acc
     /* END SOLUTION */
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     /* START SOLUTION */
-
+    var arr = array
+    var acc = []
+    if (isSorted === false){
+      for (var i = 0; i< arr.length; i++){
+        if (!acc.includes(arr[i])){
+           acc.push(arr[i])
+        }
+      }
+     }
+      else {
+      arr.sort()
+      for(var i = 0; i<arr.length; i++){
+        if(arr[i] !== arr[i+1]){
+            acc.push(arr[i])
+          }
+        }  
+    }
+    return acc;
     /* END SOLUTION */
   };
 
@@ -83,7 +182,11 @@
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
     /* START SOLUTION */
-
+        var acc = [];    
+        _.each(collection, function(element,key, collection){
+              acc.push(iterator(element,key))
+          }) 
+          return acc;
     /* END SOLUTION */
   };
 
@@ -101,7 +204,9 @@
     // values into a new array of values. _.pluck() is solved for you
     // as an example of this.
     /* START SOLUTION */
-
+      return  _.map(collection, function(element){
+        return element[key]
+      })
     /* END SOLUTION */
   };
 
@@ -117,7 +222,15 @@
   //
   _.reduce = function(collection, iterator, accumulator) {
     /* START SOLUTION */
-
+      if (accumulator === undefined) {
+        accumulator = collection[0]
+        collection= collection.slice(1)
+      }
+      var acc = accumulator
+      _.each(collection, function(element){
+        acc = iterator(acc, element)
+      })
+      return acc
     /* END SOLUTION */
   };
 

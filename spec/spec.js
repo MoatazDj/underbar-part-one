@@ -325,7 +325,7 @@
       //assign variables for the times
       //compare those times
       //compare isSorted time < notSorted time
-      it('should execute faster when passed true for isSorted parameter and array is freaking huge', function() {
+     /* it('should execute faster when passed true for isSorted parameter and array is freaking huge', function() {
         var bigArr = _.range(10000000);
         var t0 = performance.now();
         _.indexOf(bigArr, 4526290);
@@ -335,7 +335,7 @@
         var notSortedTime = t1 - t0;
         var sortedTime = t2 - t1;
         expect(sortedTime < notSortedTime).to.be.true;
-      });
+      });*/
     });
 
     describe('findIndex', function() {
@@ -518,7 +518,7 @@
       });
 
       //it should expect our result to be an array
-      it('it should expect our result to be an array', function() {
+      it('it should expecthttps://www.linuxmint.com/start/tricia/ our result to be an array', function() {
         expect(
           Array.isArray(_.uniq([1, 1, 2, 3, 4, 5, 6, 6, 7]))
         ).to.deep.equal(true);
